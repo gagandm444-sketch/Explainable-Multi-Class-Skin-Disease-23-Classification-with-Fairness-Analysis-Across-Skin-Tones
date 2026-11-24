@@ -1,0 +1,587 @@
+/* ==========================================================================
+   SkinFairness-AI | Professional Clinical AI Design System
+   Enterprise Medical Technology Aesthetic (Deep Obsidian, Electric Cyan, Neon Teal)
+   ========================================================================== */
+
+:root {
+  --bg-app: #060913;
+  --bg-sidebar: #090e1c;
+  --bg-card: rgba(14, 22, 41, 0.92);
+  --bg-card-hover: rgba(22, 34, 61, 0.95);
+  --bg-input: #0b1329;
+  
+  --border-subtle: rgba(56, 189, 248, 0.12);
+  --border-card: #1e293b;
+  --border-hover: #38bdf8;
+  
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  
+  --brand-cyan: #06b6d4;
+  --brand-blue: #3b82f6;
+  --brand-indigo: #6366f1;
+  --brand-purple: #a855f7;
+  
+  --status-emerald: #10b981;
+  --status-amber: #f59e0b;
+  --status-rose: #f43f5e;
+
+  /* Fitzpatrick Skin Tone Colorimetric Scale */
+  --fst-1: #faebe2;
+  --fst-2: #f4d3be;
+  --fst-3: #e6b797;
+  --fst-4: #bb8760;
+  --fst-5: #8c5234;
+  --fst-6: #472b1d;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.5;
+  font-size: 14px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-app);
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Layout Utilities (Zero external CDN dependency) */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-row { flex-direction: row; }
+.flex-wrap { flex-wrap: wrap; }
+.flex-1 { flex: 1 1 0%; }
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.justify-end { justify-content: flex-end; }
+.gap-1 { gap: 0.25rem; }
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 0.75rem; }
+.gap-4 { gap: 1rem; }
+.gap-6 { gap: 1.5rem; }
+
+.grid { display: grid; }
+.grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.grid-cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+
+@media (max-width: 1024px) {
+  .lg-grid-12-stack > .col-5,
+  .lg-grid-12-stack > .col-7,
+  .lg-grid-12-stack > .col-4,
+  .lg-grid-12-stack > .col-8 {
+    grid-column: span 12 / span 12 !important;
+  }
+}
+@media (max-width: 768px) {
+  .grid-cols-3, .grid-cols-4, .grid-cols-6 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 480px) {
+  .grid-cols-2 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+.col-3 { grid-column: span 3 / span 12; }
+.col-4 { grid-column: span 4 / span 12; }
+.col-5 { grid-column: span 5 / span 12; }
+.col-6 { grid-column: span 6 / span 12; }
+.col-7 { grid-column: span 7 / span 12; }
+.col-8 { grid-column: span 8 / span 12; }
+.col-12 { grid-column: span 12 / span 12; }
+
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.hidden { display: none !important; }
+
+/* Glassmorphism Cards & Surfaces */
+.clinical-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-card);
+  border-radius: 12px;
+  padding: 1.25rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.clinical-card:hover {
+  border-color: rgba(56, 189, 248, 0.3);
+  box-shadow: 0 8px 24px -8px rgba(6, 182, 212, 0.12);
+}
+
+.clinical-card-compact {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 8px;
+  padding: 0.85rem;
+}
+
+/* Navigation Tabs */
+.nav-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.nav-tab-btn:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.03);
+}
+.nav-tab-btn.active {
+  color: var(--brand-cyan);
+  border-color: var(--brand-cyan);
+  background: rgba(6, 182, 212, 0.08);
+}
+
+/* Case Selection Chips */
+.case-tile {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid var(--border-card);
+  border-radius: 8px;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.case-tile:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.case-tile.active {
+  border-color: var(--brand-cyan);
+  background: rgba(6, 182, 212, 0.12);
+  box-shadow: 0 0 16px rgba(6, 182, 212, 0.25);
+}
+
+/* Fitzpatrick Tone Badges */
+.fst-chip-1 { background-color: var(--fst-1); color: #332115; font-weight: 700; }
+.fst-chip-2 { background-color: var(--fst-2); color: #332115; font-weight: 700; }
+.fst-chip-3 { background-color: var(--fst-3); color: #2e1a0b; font-weight: 700; }
+.fst-chip-4 { background-color: var(--fst-4); color: #ffffff; font-weight: 700; }
+.fst-chip-5 { background-color: var(--fst-5); color: #ffffff; font-weight: 700; }
+.fst-chip-6 { background-color: var(--fst-6); color: #ffffff; font-weight: 700; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.badge-cyan { background: rgba(6, 182, 212, 0.15); color: #38bdf8; border: 1px solid rgba(6, 182, 212, 0.3); }
+.badge-emerald { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+.badge-amber { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+.badge-rose { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
+.badge-purple { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+
+/* Buttons & Inputs */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.25rem;
+  background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  box-shadow: 0 6px 16px rgba(14, 165, 233, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #1e293b;
+  color: #e2e8f0;
+  border: 1px solid var(--border-card);
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-secondary:hover {
+  background: #334155;
+  border-color: #475569;
+}
+
+input[type="text"], select, textarea {
+  background: var(--bg-input);
+  border: 1px solid var(--border-card);
+  color: var(--text-main);
+  padding: 0.55rem 0.85rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+input[type="text"]:focus, select:focus, textarea:focus {
+  border-color: var(--brand-cyan);
+}
+
+input[type="range"] {
+  accent-color: var(--brand-cyan);
+  cursor: pointer;
+}
+input[type="checkbox"] {
+  accent-color: var(--brand-cyan);
+  cursor: pointer;
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Animations */
+@keyframes scanSweep {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(800%); }
+}
+.scan-beam {
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(180deg, transparent, rgba(6, 182, 212, 0.8), transparent);
+  animation: scanSweep 3.5s linear infinite;
+  pointer-events: none;
+}
+
+/* Probability Progress Bars */
+.progress-bar-track {
+  width: 100%;
+  height: 6px;
+  background: #1e293b;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease-out;
+}
+.progress-bar-cyan { background: linear-gradient(90deg, #0ea5e9, #06b6d4); }
+.progress-bar-slate { background: #475569; }
+
+/* Typography Helpers */
+.font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+.text-xs { font-size: 0.75rem; }
+.text-sm { font-size: 0.875rem; }
+.text-base { font-size: 1rem; }
+.text-lg { font-size: 1.125rem; }
+.text-xl { font-size: 1.25rem; }
+.text-2xl { font-size: 1.5rem; }
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+.uppercase { text-transform: uppercase; }
+.tracking-wider { letter-spacing: 0.05em; }
+
+.text-cyan { color: var(--brand-cyan); }
+.text-emerald { color: var(--status-emerald); }
+.text-amber { color: var(--status-amber); }
+.text-rose { color: var(--status-rose); }
+.text-purple { color: var(--brand-purple); }
+.text-muted { color: var(--text-muted); }
+.text-dim { color: var(--text-dim); }
+
+/* ==========================================================================
+   Multimodal AI Chat Enhancements (Camera, Photo, Voice, Grad-CAM Cards)
+   ========================================================================== */
+.chat-attachment-preview {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.65rem;
+  background: rgba(14, 165, 233, 0.15);
+  border: 1px solid rgba(14, 165, 233, 0.4);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: #38bdf8;
+  margin-bottom: 0.4rem;
+}
+.chat-attachment-thumb {
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+.chat-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: #1e293b;
+  border: 1px solid var(--border-card);
+  color: #cbd5e1;
+  transition: all 0.2s ease;
+}
+.chat-action-btn:hover {
+  background: #334155;
+  border-color: var(--brand-cyan);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+.chat-action-btn.active {
+  background: rgba(6, 182, 212, 0.2);
+  border-color: var(--brand-cyan);
+  color: #38bdf8;
+}
+.camera-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 7, 18, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.camera-modal-box {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 520px;
+  padding: 1.25rem;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
+}
+.recording-pulse {
+  animation: pulseGlow 1.2s infinite ease-in-out;
+  color: #f43f5e !important;
+  border-color: #f43f5e !important;
+  background: rgba(244, 63, 94, 0.15) !important;
+}
+
+/* ==========================================================================
+   Dermoscopy Specimen & Grad-CAM Themes (Cyber, DermLite, Wood's UV, Radiology, OLED, Daylight)
+   ========================================================================== */
+#dermoscopyCardContainer {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 1. Cyber-Titanium Console */
+#dermoscopyCardContainer.theme-cyber {
+  background: rgba(14, 22, 41, 0.95);
+  border: 1px solid rgba(6, 182, 212, 0.55);
+  box-shadow: 0 0 35px rgba(6, 182, 212, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+#dermoscopyCardContainer.theme-cyber .canvas-frame {
+  border: 2px solid rgba(6, 182, 212, 0.7);
+  box-shadow: 0 0 25px rgba(6, 182, 212, 0.4), inset 0 0 25px rgba(0, 0, 0, 0.95);
+  border-radius: 12px;
+}
+#dermoscopyCardContainer.theme-cyber .scan-beam {
+  background: linear-gradient(90deg, transparent, #06b6d4, transparent);
+  box-shadow: 0 0 18px #06b6d4;
+}
+
+/* 2. DermLite DL4 Polarized Lens Ring (Circular 30mm Optic) */
+#dermoscopyCardContainer.theme-dermlite {
+  background: radial-gradient(circle at center, #1e293b 0%, #070b14 100%);
+  border: 2px solid #475569;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.9), inset 0 0 25px rgba(0, 0, 0, 0.6);
+}
+#dermoscopyCardContainer.theme-dermlite .canvas-frame {
+  border-radius: 50% !important;
+  border: 12px solid #334155 !important;
+  box-shadow: 0 0 0 3px #64748b, 0 0 0 7px #1e293b, 0 0 35px rgba(255, 255, 255, 0.25), inset 0 0 35px rgba(0, 0, 0, 0.95) !important;
+  transform: scale(0.97);
+}
+#dermoscopyCardContainer.theme-dermlite .scan-beam {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+/* 3. Wood's Lamp UV (365nm Fluorescence Modality) */
+#dermoscopyCardContainer.theme-woodlamp {
+  background: radial-gradient(circle at center, #1b0c36 0%, #080214 100%);
+  border: 1px solid rgba(168, 85, 247, 0.65);
+  box-shadow: 0 0 40px rgba(168, 85, 247, 0.35), inset 0 0 30px rgba(147, 51, 234, 0.15);
+}
+#dermoscopyCardContainer.theme-woodlamp .canvas-frame {
+  border: 2px solid #a855f7;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.5), 0 0 10px rgba(52, 211, 153, 0.3), inset 0 0 30px rgba(15, 2, 35, 0.95);
+}
+#dermoscopyCardContainer.theme-woodlamp .scan-beam {
+  background: linear-gradient(90deg, transparent, #34d399, #a855f7, transparent);
+  box-shadow: 0 0 18px #34d399, 0 0 25px #a855f7;
+}
+
+/* 4. PACS Radiology / Pathology Station */
+#dermoscopyCardContainer.theme-radiology {
+  background: #050811;
+  border: 1px solid #374151;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.95), inset 0 0 15px rgba(0, 0, 0, 0.9);
+}
+#dermoscopyCardContainer.theme-radiology .canvas-frame {
+  border: 2px solid #4b5563;
+  border-radius: 4px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.8), inset 0 0 30px #000000;
+}
+#dermoscopyCardContainer.theme-radiology .scan-beam {
+  background: linear-gradient(90deg, transparent, #f59e0b, transparent);
+  box-shadow: 0 0 12px #f59e0b;
+}
+
+/* 5. OLED Pure Black High Contrast */
+#dermoscopyCardContainer.theme-oled {
+  background: #000000;
+  border: 1px solid #1e293b;
+  box-shadow: 0 0 45px rgba(0, 0, 0, 1.0);
+}
+#dermoscopyCardContainer.theme-oled .canvas-frame {
+  border: 1px solid #334155;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 1.0), inset 0 0 35px #000000;
+}
+#dermoscopyCardContainer.theme-oled .scan-beam {
+  background: linear-gradient(90deg, transparent, #64748b, transparent);
+  box-shadow: 0 0 8px #64748b;
+}
+
+/* 6. Daylight Clinical Examination Studio */
+#dermoscopyCardContainer.theme-daylight {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.2);
+  color: #0f172a;
+}
+#dermoscopyCardContainer.theme-daylight .canvas-frame {
+  border: 2px solid #0f172a;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25), inset 0 0 20px rgba(0, 0, 0, 0.2);
+}
+#dermoscopyCardContainer.theme-daylight .text-main {
+  color: #0f172a !important;
+}
+#dermoscopyCardContainer.theme-daylight .text-muted {
+  color: #475569 !important;
+}
+#dermoscopyCardContainer.theme-daylight .clinical-card-compact {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #0f172a !important;
+}
+#dermoscopyCardContainer.theme-daylight select,
+#dermoscopyCardContainer.theme-daylight input {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+#dermoscopyCardContainer.theme-daylight .scan-beam {
+  background: linear-gradient(90deg, transparent, #0284c7, transparent);
+  box-shadow: 0 0 10px #0284c7;
+}
+
+/* Theme Switcher Button Pills */
+.theme-pill-btn {
+  padding: 0.28rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  background: #1e293b;
+  border: 1px solid var(--border-card);
+  color: #94a3b8;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  user-select: none;
+}
+.theme-pill-btn:hover {
+  color: #ffffff;
+  border-color: var(--brand-cyan);
+  background: #273549;
+  transform: translateY(-1px);
+}
+.theme-pill-btn.active {
+  background: rgba(6, 182, 212, 0.25);
+  border-color: var(--brand-cyan);
+  color: #38bdf8;
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.35);
+}
+#dermoscopyCardContainer.theme-woodlamp .theme-pill-btn.active {
+  background: rgba(168, 85, 247, 0.28);
+  border-color: #a855f7;
+  color: #c084fc;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+}
+#dermoscopyCardContainer.theme-radiology .theme-pill-btn.active {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: #f59e0b;
+  color: #fbbf24;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);
+}
+#dermoscopyCardContainer.theme-daylight .theme-pill-btn {
+  background: #e2e8f0;
+  border-color: #cbd5e1;
+  color: #334155;
+}
+#dermoscopyCardContainer.theme-daylight .theme-pill-btn.active {
+  background: #0284c7;
+  border-color: #0284c7;
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(2, 132, 199, 0.3);
+}
+
+

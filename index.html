@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkinFairness-AI | Clinical AI Vision-Language &amp; Equity Platform</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ========================================================================= -->
+  <!-- 1. EXECUTIVE HEADER & TELEMETRY BAR                                       -->
+  <!-- ========================================================================= -->
+  <header style="border-bottom: 1px solid var(--border-card); background: #080d1a; padding: 0.85rem 1.5rem; position: sticky; top: 0; z-index: 100;">
+    <div style="max-width: 1400px; margin: 0 auto;" class="flex items-center justify-between flex-wrap gap-4">
+      
+      <!-- Brand & Title -->
+      <div class="flex items-center gap-3">
+        <div style="width: 42px; height: 42px; border-radius: 10px; background: linear-gradient(135deg, #0ea5e9, #06b6d4); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.25rem; color: #ffffff; box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);">
+          SF
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base font-bold text-main" style="letter-spacing: -0.02em;">SkinFairness-AI</h1>
+            <span class="badge badge-cyan">Research v3.0 Enterprise</span>
+            <span class="badge badge-emerald">23 Diseases • FST I-VI</span>
+          </div>
+          <p class="text-xs text-muted">Explainable Multi-Class Skin Disease Classification &amp; Fairness Studio Across Skin Tones</p>
+        </div>
+      </div>
+
+      <!-- Live Clinical Telemetry & Global Mitigation Selector -->
+      <div class="flex items-center gap-3 flex-wrap">
+        <div class="flex items-center gap-2 text-xs" style="background: rgba(15, 23, 42, 0.8); padding: 0.4rem 0.75rem; border-radius: 6px; border: 1px solid var(--border-card);">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981;"></span>
+          <span class="text-muted">Backbone:</span>
+          <span class="font-mono text-cyan font-bold">ViT-H/16 + Med-PaLM M</span>
+          <span class="text-dim">|</span>
+          <span class="text-muted">Latency:</span>
+          <span class="font-mono text-main font-bold">24ms</span>
+        </div>
+
+        <div class="flex items-center gap-2 text-xs">
+          <label for="globalMitigationSelector" class="text-muted font-semibold">Mitigation Strategy:</label>
+          <select id="globalMitigationSelector" style="padding: 0.45rem 0.75rem; border-radius: 6px; font-weight: 600;" class="text-cyan">
+            <option value="genai_augmented" selected>Generative Fair Augmentation (Diffusion SOTA - 2.9% Gap)</option>
+            <option value="group_thresholding">Post-Hoc Group-Calibrated Thresholding (4.6% Gap)</option>
+            <option value="adversarial">Adversarial Debiasing (GRL - 8.4% Gap)</option>
+            <option value="reweighting">Inverse Group Reweighting (14.3% Gap)</option>
+            <option value="baseline">Baseline Unmitigated (25.6% Bias Disparity)</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- 2. PRIMARY NAVIGATION RIBBON                                              -->
+  <!-- ========================================================================= -->
+  <nav style="background: #090e1c; border-bottom: 1px solid var(--border-card); padding: 0 1.5rem; overflow-x: auto;">
+    <div style="max-width: 1400px; margin: 0 auto;" class="flex items-center gap-1">
+      <button class="nav-tab-btn active" data-tab="diagnosis">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        Clinical Diagnosis &amp; XAI Lab
+      </button>
+      <button class="nav-tab-btn" data-tab="bio-optics">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        Bio-Optical Physics (Beer-Lambert)
+      </button>
+      <button class="nav-tab-btn" data-tab="counterfactual">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+        Counterfactual Tone Transfer
+      </button>
+      <button class="nav-tab-btn" data-tab="fairness">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg>
+        Tone Equity &amp; ROC Audit
+      </button>
+      <button class="nav-tab-btn" data-tab="taxonomy">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+        23-Disease Taxonomy
+      </button>
+      <button class="nav-tab-btn" data-tab="ai-chat">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+        AI Chat (Camera, Photo &amp; Voice)
+      </button>
+      <button class="nav-tab-btn" data-tab="upload">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+        Custom Image Analyzer
+      </button>
+      <button class="nav-tab-btn" data-tab="quiz">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        Clinical Equity Quiz
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========================================================================= -->
+  <!-- 3. MAIN WORKBENCH VIEWPORT                                                -->
+  <!-- ========================================================================= -->
+  <main style="max-width: 1400px; margin: 0 auto; padding: 1.5rem;">
+
+    <!-- ===================================================================== -->
+    <!-- TAB 1: CLINICAL DIAGNOSIS & XAI LAB                                   -->
+    <!-- ===================================================================== -->
+    <section id="panel-diagnosis" class="tab-content-panel space-y-4">
+      
+      <!-- Patient Benchmark Cases Carousel -->
+      <div style="margin-bottom: 1.25rem;">
+        <div class="flex items-center justify-between" style="margin-bottom: 0.65rem;">
+          <div class="flex items-center gap-2">
+            <span class="text-xs uppercase font-bold text-muted tracking-wider">Diverse Patient Benchmark Cohort</span>
+            <span class="text-xs text-dim">(FST I through FST VI Stratification)</span>
+          </div>
+          <span class="text-xs text-cyan">Select patient profile to inspect multi-class neural activation</span>
+        </div>
+        <div id="caseListContainer" class="grid grid-cols-2 lg-grid-12-stack" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
+          <!-- Populated by app.js -->
+        </div>
+      </div>
+
+      <!-- Main Dual-Column Clinical Diagnostic Grid -->
+      <div class="grid grid-cols-12 lg-grid-12-stack gap-4">
+        
+        <!-- Left: Dermoscopy Canvas & Heatmap Controller (5 cols) -->
+        <div class="col-5 space-y-3">
+          
+          <div id="dermoscopyCardContainer" class="clinical-card space-y-3 theme-cyber">
+            <!-- Header & Lens Theme Switcher -->
+            <div class="flex items-center justify-between flex-wrap gap-2 text-xs">
+              <span class="font-bold text-main flex items-center gap-2">
+                <span style="width: 8px; height: 8px; border-radius: 50%; background: #06b6d4; box-shadow: 0 0 10px #06b6d4;"></span>
+                Dermoscopy Specimen &amp; Grad-CAM Saliency
+              </span>
+
+              <!-- Lens Themes Switcher -->
+              <div class="flex items-center gap-1 flex-wrap" id="dermThemeSelector">
+                <button type="button" class="theme-pill-btn active" data-theme="theme-cyber" title="Cyber-Titanium Console (Neon HUD)">💎 Cyber</button>
+                <button type="button" class="theme-pill-btn" data-theme="theme-dermlite" title="DermLite DL4 Polarized Lens Ring (30mm Reticle Optic)">🔬 DermLite</button>
+                <button type="button" class="theme-pill-btn" data-theme="theme-woodlamp" title="Wood's Lamp UV (365nm Fluorescence Modality)">🟣 Wood's UV</button>
+                <button type="button" class="theme-pill-btn" data-theme="theme-radiology" title="PACS Radiology Station (Amber Diagnostic Grid)">🩻 Radiology</button>
+                <button type="button" class="theme-pill-btn" data-theme="theme-oled" title="OLED Pure Black Diagnostic (High Contrast)">⬛ OLED</button>
+                <button type="button" class="theme-pill-btn" data-theme="theme-daylight" title="Daylight Clinical Studio (5500K Office Ambient)">☀️ Daylight</button>
+              </div>
+            </div>
+
+            <!-- Canvas Container -->
+            <div id="dermoscopyCanvasWrapper" class="canvas-frame" style="position: relative; width: 100%; aspect-ratio: 1; overflow: hidden; background: #000000; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+              <canvas id="mainDermCanvas" width="360" height="360" style="width: 100%; height: 100%; object-fit: cover; display: block;"></canvas>
+              <div id="dermScanBeam" class="scan-beam"></div>
+            </div>
+
+            <!-- Active Theme & Specimen Telemetry Readout -->
+            <div class="flex items-center justify-between px-1 text-xs" style="margin-top: -0.25rem;">
+              <span id="dermActiveThemeBadge" class="badge badge-cyan font-mono" style="font-size: 0.68rem;">💎 Cyber-Titanium Console</span>
+              <span id="dermFstBadge" class="badge font-mono" style="font-size: 0.68rem; background: var(--fst-5); color: #fff;">FST V (Brown Skin)</span>
+            </div>
+
+            <!-- Interactive Optical & Grad-CAM Controls -->
+            <div class="clinical-card-compact space-y-2 text-xs" style="background: rgba(11, 19, 41, 0.75);">
+              
+              <!-- Toggles Row: Grad-CAM, Reticle Ruler, Polarized Light -->
+              <div class="grid grid-cols-3 gap-2 pb-1 border-b border-card" style="border-bottom: 1px solid rgba(51, 65, 85, 0.4);">
+                <label class="flex items-center gap-1.5 cursor-pointer font-bold text-main">
+                  <input type="checkbox" id="toggleCamCheckbox" checked>
+                  <span>Grad-CAM</span>
+                </label>
+                <label class="flex items-center gap-1.5 cursor-pointer text-muted font-medium hover:text-main">
+                  <input type="checkbox" id="toggleReticleCheckbox" checked>
+                  <span>10mm Reticle</span>
+                </label>
+                <label class="flex items-center gap-1.5 cursor-pointer text-muted font-medium hover:text-main">
+                  <input type="checkbox" id="togglePolarizedCheckbox" checked>
+                  <span>Cross-Polarized</span>
+                </label>
+              </div>
+
+              <!-- Heatmap Opacity & Colormap -->
+              <div class="flex items-center justify-between gap-3 pt-1">
+                <span class="text-muted">Heatmap Opacity:</span>
+                <input type="range" id="camAlphaRange" min="0.1" max="1.0" step="0.05" value="0.75" style="width: 130px;">
+              </div>
+
+              <div class="flex items-center justify-between gap-3">
+                <span class="text-muted">Saliency Colormap:</span>
+                <select id="camPaletteSelector" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
+                  <option value="turbo" selected>Turbo (HDR Research Standard)</option>
+                  <option value="cyan">Bioluminescent Cyan (Clinical Optic)</option>
+                  <option value="uv">Wood's Lamp UV (Fluorescence Optic)</option>
+                  <option value="jet">Classic Jet (Oncologic Standard)</option>
+                  <option value="viridis">Viridis (Colorblind-Safe)</option>
+                  <option value="magma">Magma (Thermal High-Contrast)</option>
+                  <option value="inferno">Inferno (Radiance Standard)</option>
+                  <option value="mono">Monochromatic Saliency Edge</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Individual Typology Angle (ITA) Gauge -->
+          <div class="clinical-card space-y-2 text-xs">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-main">Perilesional Colorimetry (ITA°)</span>
+              <span class="badge badge-purple font-mono">CIE L*a*b* Standard</span>
+            </div>
+            <p class="text-dim text-xs">
+              Quantified via Individual Typology Angle: <code class="font-mono text-cyan">ITA° = arctan((L* - 50) / b*) × (180 / π)</code>
+            </p>
+            <div style="height: 10px; border-radius: 5px; overflow: hidden; display: flex; border: 1px solid var(--border-card); margin-top: 0.4rem;">
+              <div style="flex: 20; background: var(--fst-1);" title="FST I (ITA > 55°)"></div>
+              <div style="flex: 20; background: var(--fst-2);" title="FST II (41° - 55°)"></div>
+              <div style="flex: 20; background: var(--fst-3);" title="FST III (28° - 41°)"></div>
+              <div style="flex: 20; background: var(--fst-4);" title="FST IV (10° - 28°)"></div>
+              <div style="flex: 10; background: var(--fst-5);" title="FST V (-30° - 10°)"></div>
+              <div style="flex: 10; background: var(--fst-6);" title="FST VI (ITA < -30°)"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: Diagnostic Status, Probabilities, Concept Attributions (7 cols) -->
+        <div class="col-7 space-y-3">
+          
+          <!-- Case Header & Patient Profile -->
+          <div class="clinical-card space-y-2">
+            <h2 id="activeCaseHeading" class="text-lg font-bold text-main">Case Profile</h2>
+            <div id="activeCaseBadges" class="flex items-center gap-2 flex-wrap" style="margin-top: 0.35rem;">
+              <!-- Badges populated by app.js -->
+            </div>
+            <p id="activeCaseSymptoms" class="text-xs text-muted" style="border-top: 1px solid var(--border-card); padding-top: 0.65rem; margin-top: 0.5rem; line-height: 1.6;">
+              Symptoms description...
+            </p>
+          </div>
+
+          <!-- Prediction Status Banner -->
+          <div id="activeStatusBanner">
+            <!-- Populated by app.js -->
+          </div>
+
+          <!-- Top 5 Differential Diagnostic Probabilities -->
+          <div class="clinical-card space-y-2">
+            <div class="flex items-center justify-between text-xs">
+              <span class="uppercase font-bold text-main tracking-wider">Multi-Class Top-5 Differential Distribution</span>
+              <span class="font-mono text-muted text-xs">Softmax Confidence</span>
+            </div>
+            <div id="activeProbList" style="margin-top: 0.5rem;">
+              <!-- Populated by app.js -->
+            </div>
+          </div>
+
+          <!-- Concept Bottleneck Attributions (ABCD + Clinical Findings) -->
+          <div class="clinical-card space-y-2">
+            <div class="flex items-center justify-between text-xs">
+              <span class="uppercase font-bold text-main tracking-wider">Concept Bottleneck Attributions</span>
+              <span class="badge badge-purple font-mono">Dermatological Features</span>
+            </div>
+            <div id="activeConceptList" class="grid grid-cols-2 gap-2" style="margin-top: 0.4rem;">
+              <!-- Populated by app.js -->
+            </div>
+          </div>
+
+          <!-- Generative AI SOAP Summary -->
+          <div class="clinical-card space-y-2">
+            <div class="flex items-center justify-between text-xs">
+              <span class="uppercase font-bold text-cyan tracking-wider flex items-center gap-1.5">
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                Generative AI SOAP Consultation Summary
+              </span>
+              <span class="badge badge-cyan font-mono">LLM-Med Reasoner</span>
+            </div>
+            <div id="activeSoapNote" style="margin-top: 0.4rem;">
+              <!-- Populated by app.js -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 2: BIO-OPTICAL PHYSICS SIMULATOR (Beer-Lambert Skin Physics)      -->
+    <!-- ===================================================================== -->
+    <section id="panel-bio-optics" class="tab-content-panel hidden space-y-4">
+      
+      <div class="clinical-card space-y-3">
+        <div>
+          <div class="flex items-center justify-between">
+            <h2 class="text-base font-bold text-main">Bio-Optical Skin Physics: Erythema Masking Simulation</h2>
+            <span class="badge badge-cyan font-mono">Beer-Lambert Law: I(λ) = I₀(λ) · exp(-μ_a · d)</span>
+          </div>
+          <p class="text-xs text-muted" style="margin-top: 0.25rem;">
+            Understand the biological optics behind why AI models trained on light skin fail on dark skin. Melanin in the stratum basale absorbs the 540-580nm wavelengths of oxyhemoglobin, attenuating visible erythema into violaceous or dark grey hues.
+          </p>
+        </div>
+
+        <!-- Interactive Physics Controls & Visualizer -->
+        <div class="grid grid-cols-12 gap-4" style="margin-top: 1rem;">
+          
+          <!-- Optical Cross-Section Canvas -->
+          <div class="col-6 space-y-2">
+            <div class="clinical-card-compact text-xs space-y-2" style="background: #000000; height: 280px; position: relative;">
+              <canvas id="bioOpticsCanvas" width="480" height="260" style="width: 100%; height: 100%;"></canvas>
+            </div>
+            <div class="flex items-center justify-between text-xs text-dim">
+              <span>Epidermis (Melanosomes)</span>
+              <span>Dermal-Epidermal Junction</span>
+              <span>Dermis (Capillary Erythema)</span>
+            </div>
+          </div>
+
+          <!-- Controls & Mathematical Readout -->
+          <div class="col-6 space-y-3 text-xs">
+            
+            <div class="clinical-card-compact space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-main">Melanin Volume Fraction (f_mel):</span>
+                <span class="font-mono text-cyan font-bold" id="opticsMelaninVal">28% (FST V)</span>
+              </div>
+              <input type="range" id="opticsMelaninSlider" min="2" max="45" value="28" style="width: 100%;">
+              <div class="flex items-center justify-between text-dim" style="font-size: 10px;">
+                <span>FST I (~2-5%)</span>
+                <span>FST III (~15%)</span>
+                <span>FST V (~28%)</span>
+                <span>FST VI (~40%+)</span>
+              </div>
+            </div>
+
+            <div class="clinical-card-compact space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-main">Underlying Capillary Erythema Severity:</span>
+                <span class="font-mono text-rose font-bold" id="opticsErythemaVal">High (Severe Flare)</span>
+              </div>
+              <input type="range" id="opticsErythemaSlider" min="10" max="100" value="75" style="width: 100%;">
+            </div>
+
+            <!-- Optical Calculations Readout -->
+            <div class="clinical-card-compact space-y-2" style="background: rgba(11, 19, 41, 0.8);">
+              <div class="text-xs font-bold uppercase tracking-wider text-cyan">Optical Simulation Metrics:</div>
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                <div>
+                  <span class="text-dim block">Transmitted OxyHb (540nm):</span>
+                  <span class="font-mono text-main font-bold" id="opticsTransmittanceVal">18.4% (Severe Attenuation)</span>
+                </div>
+                <div>
+                  <span class="text-dim block">Apparent Surface Color:</span>
+                  <span class="font-bold" id="opticsSurfaceHue" style="color: #c084fc;">Violaceous / Slate-Grey</span>
+                </div>
+                <div>
+                  <span class="text-dim block">Baseline AI Confidence:</span>
+                  <span class="font-mono text-rose font-bold" id="opticsAiBaselineVal">32.8% (False Negative Risk)</span>
+                </div>
+                <div>
+                  <span class="text-dim block">Fair Mitigated AI:</span>
+                  <span class="font-mono text-emerald font-bold" id="opticsAiFairVal">86.4% (Texture Guardrail Active)</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 3: COUNTERFACTUAL TONE TRANSFER STUDIO                            -->
+    <!-- ===================================================================== -->
+    <section id="panel-counterfactual" class="tab-content-panel hidden space-y-4">
+      
+      <div class="clinical-card space-y-3">
+        <div>
+          <h2 class="text-base font-bold text-main">Counterfactual Skin Tone Transfer &amp; Fragility Curves</h2>
+          <p class="text-xs text-muted">
+            Simulate how identical lesion morphology manifests when transferred across Fitzpatrick Skin Types I through VI using generative latent diffusion, and observe how naive models experience diagnostic collapse as melanin density increases.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-12 gap-4" style="margin-top: 1rem;">
+          
+          <!-- Tone Transfer Canvas -->
+          <div class="col-5 space-y-2">
+            <div class="clinical-card-compact" style="background: #000000; height: 260px; position: relative;">
+              <canvas id="counterfactualCanvas" width="340" height="240" style="width: 100%; height: 100%;"></canvas>
+            </div>
+            <div class="flex items-center justify-between text-xs text-cyan font-mono">
+              <span id="cfCurrentToneLabel">Current Target: FST IV (Olive)</span>
+              <span id="cfCurrentItaLabel">ITA: +18.7°</span>
+            </div>
+          </div>
+
+          <!-- Slider & Fragility Curve -->
+          <div class="col-7 space-y-3 text-xs">
+            
+            <div class="clinical-card-compact space-y-2">
+              <label class="font-bold text-main block">Continuous Fitzpatrick Skin Tone Slider:</label>
+              <input type="range" id="cfToneSlider" min="1" max="6" step="1" value="4" style="width: 100%;">
+              <div class="flex items-center justify-between text-dim" style="font-size: 10px;">
+                <span>FST I (Ivory)</span>
+                <span>FST II</span>
+                <span>FST III</span>
+                <span>FST IV</span>
+                <span>FST V</span>
+                <span>FST VI (Dark)</span>
+              </div>
+            </div>
+
+            <!-- Fragility Curve Canvas (Chart showing Confidence vs FST) -->
+            <div class="clinical-card-compact space-y-1">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-main">Diagnostic Fragility Curve (Confidence vs Tone)</span>
+                <span class="text-dim font-mono">Red: Baseline | Cyan: Fair SOTA</span>
+              </div>
+              <div style="height: 120px; background: rgba(0,0,0,0.5); border-radius: 4px; padding: 4px;">
+                <canvas id="fragilityChartCanvas" width="480" height="110" style="width: 100%; height: 100%;"></canvas>
+              </div>
+            </div>
+
+            <div class="clinical-card-compact text-xs" style="line-height: 1.5; background: rgba(11, 19, 41, 0.8);">
+              <strong class="text-cyan">Counterfactual AI Explanation:</strong>
+              <p id="cfExplanationText" class="text-muted" style="margin-top: 0.25rem;">
+                Translating this lesion to FST IV causes mild pigment blending. The baseline model drops 12% in confidence due to attenuated erythema, while the fair diffusion-trained model remains invariant at 88% confidence.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 4: TONE EQUITY & ROC AUDIT                                        -->
+    <!-- ===================================================================== -->
+    <section id="panel-fairness" class="tab-content-panel hidden space-y-4">
+      
+      <!-- KPI Metric Cards -->
+      <div id="fairnessKpiGrid" class="grid grid-cols-4 gap-3">
+        <!-- Populated by app.js -->
+      </div>
+
+      <!-- Performance Disparity Chart Canvas -->
+      <div class="clinical-card space-y-3">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-sm font-bold text-main uppercase tracking-wider">Stratified Accuracy &amp; Sensitivity (TPR) by Tone</h3>
+            <p class="text-xs text-muted">Tracking algorithmic performance degradation across Fitzpatrick groups FST I through VI</p>
+          </div>
+          <span class="badge badge-cyan font-mono">Sample N = 17,040</span>
+        </div>
+
+        <div style="height: 250px; background: rgba(0,0,0,0.4); border-radius: 8px; border: 1px solid var(--border-card); padding: 0.5rem;">
+          <canvas id="fairnessChartCanvas" width="900" height="230" style="width: 100%; height: 100%;"></canvas>
+        </div>
+      </div>
+
+      <!-- Mitigation Comparison Table -->
+      <div class="clinical-card space-y-3">
+        <h3 class="text-sm font-bold text-main uppercase tracking-wider">Comparative Algorithmic Fairness Benchmark</h3>
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; text-align: left; font-size: 0.8rem; border-collapse: collapse;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--border-card); color: var(--text-muted); text-transform: uppercase;">
+                <th style="padding: 0.6rem 0.75rem;">Strategy</th>
+                <th style="padding: 0.6rem 0.75rem;">Overall Acc</th>
+                <th style="padding: 0.6rem 0.75rem;">Macro F1</th>
+                <th style="padding: 0.6rem 0.75rem;">Equal Opp Gap</th>
+                <th style="padding: 0.6rem 0.75rem;">Disparate Impact</th>
+                <th style="padding: 0.6rem 0.75rem;">EEOC 80% Rule</th>
+              </tr>
+            </thead>
+            <tbody style="color: var(--text-main);" class="divide-y">
+              <tr style="border-bottom: 1px solid rgba(51, 65, 85, 0.4);">
+                <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Baseline (Cross-Entropy)</td>
+                <td style="padding: 0.6rem 0.75rem;" class="font-mono">81.4%</td>
+                <td style="padding: 0.6rem 0.75rem;" class="font-mono">76.2%</td>
+                <td style="padding: 0.6rem 0.75rem; color: #f43f5e;" class="font-mono font-bold">25.6% Gap</td>
+                <td style="padding: 0.6rem 0.75rem; color: #f43f5e;" class="font-mono font-bold">0.68</td>
+                <td style="padding: 0.6rem 0.75rem;"><span class="badge badge-rose">NON-COMPLIANT</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid rgba(51, 65, 85, 0.4);">
+                <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Inverse Group Reweighting</td>
+                <td style="padding: 0.6rem 0.75rem;" class="font-mono">80.9%</td>
+                <td style="padding: 0.6rem 0.75rem;" class="font-mono">78.5%</td>
+                <td style="padding: 0.6rem 0.75rem; color: #fbbf24;" class="font-mono font-bold">14.3% Gap</td>
+                <td style="padding: 0.6rem 0.75rem; color: #fbbf24;" class="font-mono font-bold">0.79</td>
+                <td style="padding: 0.6rem 0.75rem;"><span class="badge badge-amber">BORDERLINE</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid rgba(51, 65, 85, 0.4);">
+                <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Adversarial Debiasing (GRL)</td>
+                <td style="padding: 0.6rem 0.75rem;" class="font-mono">82.1%</td>
+                <td style="padding: 0.6rem 0.75rem;" class="font-mono">80.6%</td>
+                <td style="padding: 0.6rem 0.75rem; color: #34d399;" class="font-mono font-bold">8.4% Gap</td>
+                <td style="padding: 0.6rem 0.75rem; color: #34d399;" class="font-mono font-bold">0.88</td>
+                <td style="padding: 0.6rem 0.75rem;"><span class="badge badge-emerald">COMPLIANT</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid rgba(51, 65, 85, 0.4);">
+                <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Post-Hoc Group Thresholding</td>
+                <td style="padding: 0.6rem 0.75rem;" class="font-mono">81.8%</td>
+                <td style="padding: 0.6rem 0.75rem;" class="font-mono">81.2%</td>
+                <td style="padding: 0.6rem 0.75rem; color: #34d399;" class="font-mono font-bold">4.6% Gap</td>
+                <td style="padding: 0.6rem 0.75rem; color: #34d399;" class="font-mono font-bold">0.93</td>
+                <td style="padding: 0.6rem 0.75rem;"><span class="badge badge-emerald">OPTIMAL</span></td>
+              </tr>
+              <tr style="background: rgba(6, 182, 212, 0.08);">
+                <td style="padding: 0.6rem 0.75rem; font-weight: bold; color: #38bdf8;">Generative Diffusion Augmentation</td>
+                <td style="padding: 0.6rem 0.75rem; color: #38bdf8;" class="font-mono font-bold">84.7%</td>
+                <td style="padding: 0.6rem 0.75rem; color: #38bdf8;" class="font-mono font-bold">83.9%</td>
+                <td style="padding: 0.6rem 0.75rem; color: #38bdf8;" class="font-mono font-bold">2.9% Gap</td>
+                <td style="padding: 0.6rem 0.75rem; color: #38bdf8;" class="font-mono font-bold">0.96</td>
+                <td style="padding: 0.6rem 0.75rem;"><span class="badge badge-cyan font-bold">SOTA EQUAL</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 5: 23-DISEASE TAXONOMY & DIRECTORY                                -->
+    <!-- ===================================================================== -->
+    <section id="panel-taxonomy" class="tab-content-panel hidden space-y-4">
+      
+      <!-- Search & Filters -->
+      <div class="clinical-card flex items-center justify-between flex-wrap gap-3">
+        <div class="flex items-center gap-2 flex-1" style="min-width: 250px;">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          <input type="text" id="taxonomySearchBox" placeholder="Search disease by name, code, ICD-10, or category..." style="width: 100%;">
+        </div>
+        <div class="flex items-center gap-2 text-xs">
+          <label for="taxonomyFilterSelect" class="text-muted">Category:</label>
+          <select id="taxonomyFilterSelect">
+            <option value="all">All 23 Classes</option>
+            <option value="malignant">Malignant Neoplasms</option>
+            <option value="inflammatory">Inflammatory Disorders</option>
+            <option value="autoimmune">Autoimmune Conditions</option>
+            <option value="infectious">Infectious Pathologies</option>
+            <option value="high">High Risk Conditions</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Grid of 23 Disease Cards -->
+      <div id="taxonomyDirectoryGrid" class="grid grid-cols-3 gap-3">
+        <!-- Populated by app.js -->
+      </div>
+
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 6: MULTIMODAL AI CHAT (CAMERA, PHOTO, VOICE, GRAD-CAM & SOAP)     -->
+    <!-- ===================================================================== -->
+    <section id="panel-ai-chat" class="tab-content-panel hidden space-y-4">
+      
+      <div class="grid grid-cols-12 gap-4">
+        
+        <!-- Left: Interactive Multimodal Chat Assistant (7 cols) -->
+        <div class="col-7 space-y-3">
+          <div class="clinical-card flex flex-col" style="height: 620px;">
+            <div class="flex items-center justify-between" style="border-bottom: 1px solid var(--border-card); padding-bottom: 0.65rem;">
+              <div class="flex items-center gap-2">
+                <span style="width: 8px; height: 8px; border-radius: 50%; background: #06b6d4; box-shadow: 0 0 10px #06b6d4;"></span>
+                <h3 class="text-sm font-bold text-main">Med-PaLM M Multimodal Dermatology Copilot</h3>
+              </div>
+              <span class="badge badge-cyan font-mono">Live Vision-Language Engine</span>
+            </div>
+
+            <!-- Multimodal Options Bar: Camera, Photo, Voice, Sample -->
+            <div class="flex items-center gap-2 flex-wrap" style="padding: 0.6rem 0; border-bottom: 1px solid var(--border-card);">
+              <!-- Camera Option Button -->
+              <button type="button" class="chat-action-btn" id="chatCameraBtn" title="Take a live photo using camera">
+                <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                📸 Camera Snapshot
+              </button>
+
+              <!-- Photo Upload Option Button -->
+              <button type="button" class="chat-action-btn" id="chatPhotoBtn" title="Upload a skin photo from your device">
+                <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                🖼️ Upload Photo
+              </button>
+
+              <!-- Voice Dictation Option Button -->
+              <button type="button" class="chat-action-btn" id="chatVoiceBtn" title="Dictate clinical symptoms via microphone">
+                <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+                <span id="voiceBtnLabel">🎤 Voice Dictation</span>
+              </button>
+
+              <!-- Preset Sample Lesion Button -->
+              <button type="button" class="chat-action-btn" id="chatSampleBtn" title="Attach active clinical benchmark lesion">
+                🧪 Attach Active Case
+              </button>
+
+              <!-- Hidden Native Inputs -->
+              <input type="file" id="chatPhotoFileInput" accept="image/*" style="display: none;">
+              <input type="file" id="chatCameraNativeInput" accept="image/*" capture="environment" style="display: none;">
+            </div>
+
+            <!-- Quick Clinical Inquiry Pills -->
+            <div class="flex items-center gap-1.5 flex-wrap" style="padding: 0.4rem 0; border-bottom: 1px solid rgba(51, 65, 85, 0.4);">
+              <button class="copilot-prompt-pill btn-secondary" style="font-size: 11px; padding: 0.25rem 0.55rem;" data-query="Explain Grad-CAM visual attention and feature attribution for this case">
+                🔍 Grad-CAM Attention
+              </button>
+              <button class="copilot-prompt-pill btn-secondary" style="font-size: 11px; padding: 0.25rem 0.55rem;" data-query="Audit skin tone fairness and risk of misdiagnosis on dark skin">
+                ⚖️ Tone Equity Audit
+              </button>
+              <button class="copilot-prompt-pill btn-secondary" style="font-size: 11px; padding: 0.25rem 0.55rem;" data-query="What is the differential diagnostic rationale and why were alternatives ruled out?">
+                📋 Differential Rationale
+              </button>
+              <button class="copilot-prompt-pill btn-secondary" style="font-size: 11px; padding: 0.25rem 0.55rem;" data-query="Simulate counterfactual tone transformation across FST I to VI">
+                ✨ Counterfactual Tone
+              </button>
+            </div>
+
+            <!-- Message Stream Area -->
+            <div id="copilotMessageStream" class="flex-1" style="overflow-y: auto; padding: 0.75rem 0.25rem;">
+              <!-- Populated by app.js -->
+            </div>
+
+            <!-- Active Image Attachment Preview Area -->
+            <div id="chatAttachmentPreviewArea" class="hidden">
+              <!-- Rendered when image is selected -->
+            </div>
+
+            <!-- Chat Input Form -->
+            <form id="copilotChatForm" class="flex items-center gap-2" style="border-top: 1px solid var(--border-card); padding-top: 0.65rem;">
+              <input type="text" id="copilotTextInput" placeholder="Type clinical query, or capture/upload skin photo..." style="flex: 1;">
+              
+              <!-- Quick Attachment Buttons inside input -->
+              <button type="button" class="btn-secondary" id="inlineCameraBtn" title="Camera" style="padding: 0.55rem 0.75rem;">
+                📸
+              </button>
+              <button type="button" class="btn-secondary" id="inlinePhotoBtn" title="Upload Image" style="padding: 0.55rem 0.75rem;">
+                🖼️
+              </button>
+
+              <button type="submit" class="btn-primary" style="padding: 0.55rem 1.25rem;">
+                Send
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Right: Hospital SOAP Clinical Note Generator (5 cols) -->
+        <div class="col-5 space-y-3">
+          <div class="clinical-card space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-bold text-main uppercase tracking-wider">Hospital SOAP Clinical Note</h3>
+              <button class="btn-secondary" id="copySoapBtn" style="font-size: 11px; padding: 0.3rem 0.65rem;" onclick="copySoapNoteToClipboard()">
+                📋 Copy Note
+              </button>
+            </div>
+            
+            <div id="fullSoapReportBox" class="clinical-card-compact text-xs space-y-2 font-mono" style="background: #080d1a; line-height: 1.6; height: 520px; overflow-y: auto;">
+              <!-- Populated by app.js -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 7: CUSTOM IMAGE ANALYZER                                         -->
+    <!-- ===================================================================== -->
+    <section id="panel-upload" class="tab-content-panel hidden space-y-4">
+      
+      <div class="clinical-card space-y-3">
+        <div>
+          <h2 class="text-base font-bold text-main">Custom Dermatological Specimen Analyzer</h2>
+          <p class="text-xs text-muted">
+            Upload any dermoscopy or clinical photo to extract real perilesional colorimetry (ITA°), classify into the Fitzpatrick scale, and synthesize a real-time Grad-CAM saliency attention heatmap.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-12 gap-4" style="margin-top: 1rem;">
+          
+          <div class="col-6 space-y-3">
+            <!-- Dropzone -->
+            <div style="border: 2px dashed var(--border-card); border-radius: 8px; padding: 2rem; text-align: center; cursor: pointer; background: rgba(15, 23, 42, 0.4);" onclick="document.getElementById('lesionFileInput').click()">
+              <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin: 0 auto 0.5rem auto; color: var(--brand-cyan);"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+              <div class="font-bold text-sm text-main">Click or Drag &amp; Drop Image</div>
+              <div class="text-xs text-dim">Supports JPG, PNG, WEBP (Medical resolution recommended)</div>
+              <input type="file" id="lesionFileInput" accept="image/*" style="display: none;">
+            </div>
+
+            <!-- Upload Canvas Preview -->
+            <div class="clinical-card-compact" style="background: #000000; height: 260px; position: relative;">
+              <canvas id="uploadedLesionCanvas" width="360" height="260" style="width: 100%; height: 100%; object-fit: contain;"></canvas>
+            </div>
+          </div>
+
+          <!-- Analysis Results -->
+          <div class="col-6 space-y-3">
+            <h3 class="text-sm font-bold text-main uppercase tracking-wider">Automated Colorimetry &amp; Neural Inference</h3>
+            <div id="uploadedAnalysisResult">
+              <div class="clinical-card-compact text-xs text-muted" style="line-height: 1.6;">
+                Upload an image on the left to trigger the automated perilesional skin tone colorimetry engine and synthesize real-time Grad-CAM attention.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 8: CLINICAL EQUITY QUIZ CHALLENGE                                 -->
+    <!-- ===================================================================== -->
+    <section id="panel-quiz" class="tab-content-panel hidden space-y-4">
+      
+      <div class="clinical-card space-y-3">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-base font-bold text-main">Diagnostic Equity Clinical Challenge</h2>
+            <p class="text-xs text-muted">Test your diagnostic skills on atypical dermatological presentations across dark skin tones vs AI models.</p>
+          </div>
+          <span class="badge badge-purple">Physician Training Module</span>
+        </div>
+
+        <div id="quizContainer" class="clinical-card-compact space-y-3 text-xs" style="margin-top: 1rem; background: rgba(11, 19, 41, 0.8);">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-main text-sm" id="quizQuestionHeading">Question 1 of 3: Masked Violaceous Lesion</span>
+            <span class="badge badge-cyan" id="quizToneBadge">Patient: FST V (Brown Skin)</span>
+          </div>
+          <p id="quizScenarioText" class="text-muted" style="line-height: 1.6;">
+            A 42-year-old patient with Fitzpatrick Skin Type V presents with intensely pruritic polygonal papules on the volar wrist. Standard baseline AI predicts <strong>Melanocytic Nevus (58%)</strong>. On dermoscopy, fine white reticular lines are noted. What is the correct clinical diagnosis?
+          </p>
+
+          <div id="quizOptionsList" class="space-y-2" style="margin: 1rem 0;">
+            <button class="btn-secondary w-full" style="text-align: left; justify-content: flex-start;" onclick="checkQuizAnswer('lp')">
+              A) Lichen Planus (Wickham's Striae)
+            </button>
+            <button class="btn-secondary w-full" style="text-align: left; justify-content: flex-start;" onclick="checkQuizAnswer('nv')">
+              B) Melanocytic Nevus (Focal hyperpigmentation)
+            </button>
+            <button class="btn-secondary w-full" style="text-align: left; justify-content: flex-start;" onclick="checkQuizAnswer('eczema')">
+              C) Atopic Dermatitis
+            </button>
+            <button class="btn-secondary w-full" style="text-align: left; justify-content: flex-start;" onclick="checkQuizAnswer('melanoma')">
+              D) Nodular Melanoma
+            </button>
+          </div>
+
+          <div id="quizFeedbackBox" class="hidden clinical-card-compact">
+            <!-- Dynamic feedback -->
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- 4. LIVE CAMERA CAPTURE MODAL                                              -->
+  <!-- ========================================================================= -->
+  <div id="cameraModal" class="camera-modal-backdrop hidden">
+    <div class="camera-modal-box space-y-3">
+      <div class="flex items-center justify-between" style="border-bottom: 1px solid var(--border-card); padding-bottom: 0.65rem;">
+        <div class="flex items-center gap-2">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: #f43f5e; animation: pulseGlow 1.5s infinite;"></span>
+          <h3 class="font-bold text-sm text-main">Live Dermatological Camera</h3>
+        </div>
+        <button type="button" class="btn-secondary" id="closeCameraBtn" style="padding: 0.25rem 0.65rem; font-size: 11px;">✕ Close</button>
+      </div>
+
+      <div style="position: relative; width: 100%; aspect-ratio: 4/3; background: #000000; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-card);">
+        <video id="cameraVideoFeed" autoplay playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+        <canvas id="cameraCaptureBuffer" style="display: none;"></canvas>
+        <div style="position: absolute; inset: 0; pointer-events: none; border: 2px dashed rgba(6, 182, 212, 0.4); margin: 20px; border-radius: 8px;"></div>
+      </div>
+
+      <p class="text-xs text-dim text-center">
+        Center lesion specimen inside crosshairs. Ensure adequate white-balanced illumination.
+      </p>
+
+      <div class="flex items-center justify-between gap-3 pt-1">
+        <button type="button" class="btn-secondary" id="switchCameraDeviceBtn" style="font-size: 11px;">
+          🔄 Switch Camera
+        </button>
+        <button type="button" class="btn-primary" id="captureSnapshotBtn" style="padding: 0.65rem 1.5rem;">
+          📸 Capture &amp; Attach to AI Chat
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 5. APPLICATION SCRIPT ENGINE                                              -->
+  <!-- ========================================================================= -->
+  <script src="app.js"></script>
+</body>
+</html>
